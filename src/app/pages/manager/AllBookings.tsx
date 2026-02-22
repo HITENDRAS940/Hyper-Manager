@@ -91,23 +91,23 @@ export function AllBookings() {
         </div>
         
         <div className="flex items-center gap-3">
-           <div className="bg-muted/30 border border-border/50 rounded-2xl p-4 min-w-[160px]">
-              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1">Total Records</p>
+           <div className="bg-background border-2 border-border p-4 min-w-[160px] rounded-none">
+              <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-1">Total Records</p>
               <div className="flex items-center justify-between">
-                 <h3 className="text-2xl font-black text-foreground">{bookings.length}</h3>
-                 <span className="text-[10px] font-extrabold text-muted-foreground bg-muted p-1 rounded">ALL TIME</span>
+                 <h3 className="text-3xl font-black text-foreground uppercase tracking-tighter">{bookings.length}</h3>
+                 <span className="text-[10px] font-black text-muted-foreground border-2 border-border p-1 rounded-none">ALL TIME</span>
               </div>
            </div>
         </div>
       </div>
 
       {/* Control Bar */}
-      <div className="flex flex-col md:flex-row items-center gap-4 bg-card/30 backdrop-blur-md border border-border/50 p-3 rounded-2xl shadow-xl shadow-black/5">
+      <div className="flex flex-col md:flex-row items-center gap-4 bg-background border-2 border-border p-3 rounded-none shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] dark:shadow-[4px_4px_0_0_rgba(255,255,255,0.02)]">
          <div className="relative flex-1 w-full">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
             <Input 
               placeholder="Search by ref, service or user..." 
-              className="pl-10 h-11 bg-background/50 border-none focus-visible:ring-1 focus-visible:ring-primary rounded-xl transition-all"
+              className="pl-10 h-10 bg-background border-none focus-visible:ring-2 focus-visible:ring-primary rounded-none transition-all shadow-none"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -118,10 +118,10 @@ export function AllBookings() {
                 <button
                     key={status}
                     onClick={() => setSelectedStatus(status)}
-                    className={`px-4 h-11 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all whitespace-nowrap border ${
+                    className={`px-4 h-10 rounded-none text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap border-2 ${
                         selectedStatus === status 
-                        ? "bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/20" 
-                        : "bg-background/50 text-muted-foreground border-border hover:bg-muted"
+                        ? "bg-primary text-primary-foreground border-primary shadow-[2px_2px_0_0_rgba(0,0,0,0.1)]" 
+                        : "bg-background text-muted-foreground border-border hover:bg-foreground hover:text-background"
                     }`}
                 >
                     {status}
@@ -130,10 +130,10 @@ export function AllBookings() {
          </div>
 
          <Button 
-            variant="ghost" 
+            variant="outline" 
             onClick={fetchAllBookings}
             disabled={loading}
-            className="h-11 px-6 font-bold text-xs uppercase tracking-widest gap-2 shrink-0"
+            className="h-10 px-6 font-black text-xs uppercase tracking-widest gap-2 shrink-0 border-2"
           >
             {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <RefreshCcw className="w-4 h-4" />}
             Sync
@@ -178,7 +178,7 @@ export function AllBookings() {
             return (
               <div 
                 key={booking.id} 
-                className="group relative bg-card/40 backdrop-blur-md border border-border/50 rounded-[2.5rem] p-8 hover:bg-card/70 transition-all duration-500 hover:shadow-3xl hover:shadow-black/10 overflow-hidden"
+                className="group relative bg-background border-2 border-border hover:border-foreground rounded-none p-8 transition-all duration-300 shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] hover:shadow-[8px_8px_0_0_rgba(0,0,0,0.1)] hover:-translate-y-1 overflow-hidden"
               >
                 <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full -translate-y-32 translate-x-32 blur-[100px] opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
                 
@@ -186,18 +186,18 @@ export function AllBookings() {
                   {/* Status & Identity */}
                   <div className="lg:col-span-4 space-y-4">
                     <div className="flex items-center gap-3">
-                       <Badge variant="outline" className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-tighter border-2 ${statusConfig[booking.status].color}`}>
+                       <Badge variant="outline" className={`px-4 py-1.5 rounded-none text-[10px] font-black uppercase tracking-widest border-2 ${statusConfig[booking.status].color}`}>
                           <StatusIcon className="w-3 h-3 mr-2 inline-block" />
                           {statusConfig[booking.status].label}
                        </Badge>
-                       <span className="text-[10px] font-bold text-muted-foreground uppercase opacity-40 tracking-widest">{booking.reference}</span>
+                       <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest bg-muted p-1">{booking.reference}</span>
                     </div>
                     <div>
-                      <h3 className="text-3xl font-black text-foreground leading-none mb-3 group-hover:text-primary transition-colors">{booking.serviceName}</h3>
+                      <h3 className="text-3xl font-black uppercase tracking-tighter text-foreground leading-none mb-3 group-hover:text-primary transition-colors">{booking.serviceName}</h3>
                       <div className="flex items-center gap-3">
-                         <div className="bg-muted px-2 py-1 rounded text-[10px] font-bold text-muted-foreground uppercase tracking-widest">{booking.resourceName}</div>
-                         <div className="w-1.5 h-1.5 rounded-full bg-border" />
-                         <span className="text-xs font-bold text-muted-foreground/60">{new Date(booking.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} • {new Date(booking.createdAt).toLocaleDateString()}</span>
+                         <div className="bg-background border-2 border-border px-2 py-1 rounded-none text-[10px] font-black text-muted-foreground uppercase tracking-widest">{booking.resourceName}</div>
+                         <div className="w-2 h-2 bg-foreground" />
+                         <span className="text-xs font-black text-muted-foreground uppercase tracking-widest">{new Date(booking.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} • {new Date(booking.createdAt).toLocaleDateString()}</span>
                       </div>
                     </div>
                   </div>
@@ -234,33 +234,33 @@ export function AllBookings() {
                   </div>
 
                   {/* Summary Actions */}
-                  <div className="lg:col-span-3 flex flex-col items-center lg:items-end gap-3">
-                     <div className="bg-primary/5 rounded-2xl p-4 w-full group/stat hover:bg-primary transition-colors duration-500">
+                  <div className="lg:col-span-3 flex flex-col items-center lg:items-end gap-3 border-l-2 pl-8 border-border">
+                     <div className="bg-background border-2 border-primary rounded-none p-4 w-full group/stat hover:bg-primary hover:text-primary-foreground transition-all duration-300">
                         <div className="flex items-center justify-between mb-1">
-                           <p className="text-[10px] font-bold text-primary uppercase group-hover/stat:text-primary-foreground transition-colors">Subtotal</p>
-                           <ArrowUpRight className="w-3 h-3 text-primary group-hover/stat:text-primary-foreground transition-colors" />
+                           <p className="text-[10px] font-black uppercase tracking-widest">Subtotal</p>
+                           <ArrowUpRight className="w-4 h-4" />
                         </div>
-                        <h4 className="text-2xl font-black text-foreground group-hover/stat:text-primary-foreground transition-colors">₹{booking.amountBreakdown.slotSubtotal}</h4>
+                        <h4 className="text-2xl font-black uppercase tracking-tighter">₹{booking.amountBreakdown.slotSubtotal}</h4>
                      </div>
                      <div className="flex flex-col w-full gap-2">
                         <Button 
-                           variant="ghost" 
+                           variant="outline" 
                            size="sm" 
                            onClick={() => setSelectedBookingId(booking.id)}
-                           className="w-full h-10 rounded-xl gap-2 text-[10px] font-bold uppercase tracking-widest hover:bg-muted"
+                           className="w-full h-10 rounded-none border-2 border-border border-dashed hover:border-solid text-[10px] font-black uppercase tracking-widest hover:bg-foreground hover:text-background"
                         >
-                           <Eye className="w-3 h-3" />
-                           Quick View
+                           <Eye className="w-4 h-4 shrink-0" />
+                           View
                         </Button>
                         {(booking.status === 'PENDING' || booking.status === 'CONFIRMED') && (
                            <Button 
-                              variant="ghost" 
+                              variant="outline" 
                               size="sm" 
                               onClick={() => handleCancel(booking.id)}
                               disabled={cancelingIds[booking.id]}
-                              className="w-full h-10 rounded-xl gap-2 text-[10px] font-bold uppercase tracking-widest text-destructive hover:text-destructive hover:bg-destructive/10"
+                              className="w-full h-10 rounded-none border-2 border-destructive bg-destructive/10 text-[10px] font-black uppercase tracking-widest text-destructive hover:bg-destructive hover:text-destructive-foreground"
                            >
-                              {cancelingIds[booking.id] ? <Loader2 className="w-3 h-3 animate-spin" /> : <XCircle className="w-3 h-3" />}
+                              {cancelingIds[booking.id] ? <Loader2 className="w-4 h-4 animate-spin shrink-0" /> : <XCircle className="w-4 h-4 shrink-0" />}
                               Cancel Booking
                            </Button>
                         )}

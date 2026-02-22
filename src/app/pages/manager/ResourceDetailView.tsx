@@ -248,58 +248,58 @@ export function ResourceDetailView({ resourceId, onBack }: ResourceDetailViewPro
             <span className="text-[10px] font-bold uppercase tracking-widest leading-none mt-0.5">Back to services</span>
           </Button>
           <div className="space-y-1">
-            <h2 className="text-4xl font-black tracking-tight text-foreground flex items-center gap-4">
+            <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-foreground flex items-center gap-4">
               Resource Operations
-              <Badge variant="outline" className="text-[10px] font-black uppercase tracking-widest border-2 py-1 px-3 bg-primary/5 text-primary border-primary/20">
+              <Badge variant="default" className="text-[10px] font-black uppercase tracking-widest border-2 py-1 px-3">
                 Live Feed
               </Badge>
             </h2>
-            <p className="text-muted-foreground font-medium flex items-center gap-2">
-              <Layout className="w-4 h-4 opacity-40 text-primary" />
-              Monitoring and availability tracking for Resource ID: <span className="font-mono font-bold text-foreground">#{resourceId}</span>
+            <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest flex items-center gap-2 mt-2">
+              <Layout className="w-4 h-4 text-primary" />
+              Monitoring and availability tracking for Resource ID: <span className="font-black text-foreground border-b-2 border-foreground leading-none pb-0.5">#{resourceId}</span>
             </p>
           </div>
         </div>
 
         {/* Date Controller */}
-        <div className="flex items-center gap-3 bg-card/40 backdrop-blur-md border border-border/50 p-2 rounded-2xl shadow-xl shadow-black/5">
-           <Button variant="ghost" size="icon" onClick={handlePrevDay} className="h-10 w-10 min-w-[40px] rounded-xl hover:bg-muted">
+        <div className="flex items-center gap-3 bg-background border-2 border-border p-2 rounded-none shadow-[4px_4px_0_0_rgba(0,0,0,0.05)]">
+           <Button variant="outline" size="icon" onClick={handlePrevDay} className="h-10 w-10 min-w-[40px] rounded-none border-2 hover:bg-foreground hover:text-background transition-colors">
               <ChevronLeft className="w-4 h-4" />
            </Button>
            <div className="px-4 text-center min-w-[140px]">
-              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-0.5 opacity-60">Operations Date</p>
+              <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-0.5">Operations Date</p>
               <p className="text-sm font-black tracking-tight text-primary">
                  {formatDate(selectedDate)}
               </p>
            </div>
-           <Button variant="ghost" size="icon" onClick={handleNextDay} className="h-10 w-10 min-w-[40px] rounded-xl hover:bg-muted">
+           <Button variant="outline" size="icon" onClick={handleNextDay} className="h-10 w-10 min-w-[40px] rounded-none border-2 hover:bg-foreground hover:text-background transition-colors">
               <ChevronRight className="w-4 h-4" />
            </Button>
         </div>
       </div>
       {/* Control Navigation */}
-      <div className="flex items-center gap-2 bg-muted/20 p-1.5 rounded-2xl w-fit border border-border/50">
+      <div className="flex items-center gap-2 bg-background p-1.5 rounded-none border-2 border-border w-fit">
          <button 
            onClick={() => setActivePanel('bookings')}
-           className={`px-6 h-11 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${activePanel === 'bookings' ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/20' : 'text-muted-foreground hover:bg-muted'}`}
+           className={`px-6 h-10 rounded-none text-[10px] font-black uppercase tracking-widest transition-all border-2 ${activePanel === 'bookings' ? 'bg-primary text-primary-foreground border-primary shadow-[2px_2px_0_0_rgba(0,0,0,0.1)]' : 'bg-background text-muted-foreground border-transparent hover:border-foreground hover:text-foreground'}`}
          >
            Confirmed Bookings
          </button>
          <button 
            onClick={() => setActivePanel('slots')}
-           className={`px-6 h-11 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${activePanel === 'slots' ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/20' : 'text-muted-foreground hover:bg-muted'}`}
+           className={`px-6 h-10 rounded-none text-[10px] font-black uppercase tracking-widest transition-all border-2 ${activePanel === 'slots' ? 'bg-primary text-primary-foreground border-primary shadow-[2px_2px_0_0_rgba(0,0,0,0.1)]' : 'bg-background text-muted-foreground border-transparent hover:border-foreground hover:text-foreground'}`}
          >
            Availability Grid
          </button>
          <button 
            onClick={() => setActivePanel('price-rules')}
-           className={`px-6 h-11 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${activePanel === 'price-rules' ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/20' : 'text-muted-foreground hover:bg-muted'}`}
+           className={`px-6 h-10 rounded-none text-[10px] font-black uppercase tracking-widest transition-all border-2 ${activePanel === 'price-rules' ? 'bg-primary text-primary-foreground border-primary shadow-[2px_2px_0_0_rgba(0,0,0,0.1)]' : 'bg-background text-muted-foreground border-transparent hover:border-foreground hover:text-foreground'}`}
          >
            Price Rules
          </button>
          <button 
            onClick={() => setActivePanel('config')}
-           className={`px-6 h-11 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${activePanel === 'config' ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/20' : 'text-muted-foreground hover:bg-muted'}`}
+           className={`px-6 h-10 rounded-none text-[10px] font-black uppercase tracking-widest transition-all border-2 ${activePanel === 'config' ? 'bg-primary text-primary-foreground border-primary shadow-[2px_2px_0_0_rgba(0,0,0,0.1)]' : 'bg-background text-muted-foreground border-transparent hover:border-foreground hover:text-foreground'}`}
          >
            Configuration
          </button>
@@ -328,34 +328,34 @@ export function ResourceDetailView({ resourceId, onBack }: ResourceDetailViewPro
                  <p className="text-sm font-bold text-muted-foreground uppercase tracking-widest opacity-60">No operations records for this date</p>
               </div>
            ) : (
-              <div className="grid gap-3">
+              <div className="grid gap-4">
                  {Array.isArray(bookings) && bookings.map(booking => (
-                    <div key={booking.id} className="bg-card/40 backdrop-blur-md border border-border/50 rounded-[2rem] p-6 hover:bg-card transition-all group overflow-hidden relative">
+                    <div key={booking.id} className="bg-background border-2 border-border hover:border-foreground rounded-none p-6 transition-all duration-300 group overflow-hidden relative shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] hover:shadow-[8px_8px_0_0_rgba(0,0,0,0.1)] hover:-translate-y-0.5">
                        <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -translate-y-16 translate-x-16 blur-2xl group-hover:opacity-100 opacity-0 transition-opacity" />
                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 relative z-10">
                           <div className="flex items-center gap-5">
-                             <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center shrink-0">
-                                <Clock className="w-5 h-5 text-primary" />
+                             <div className="w-12 h-12 rounded-none border-2 border-border group-hover:border-primary bg-muted/50 flex items-center justify-center shrink-0 transition-colors">
+                                <Clock className="w-5 h-5 text-foreground group-hover:text-primary transition-colors" />
                              </div>
                              <div>
-                                <h4 className="text-lg font-black text-foreground group-hover:text-primary transition-colors">{booking.startTime} - {booking.endTime}</h4>
-                                <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.2em]">{booking.reference}</p>
+                                <h4 className="text-lg font-black uppercase tracking-tight text-foreground group-hover:text-primary transition-colors">{booking.startTime} - {booking.endTime}</h4>
+                                <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mt-1 bg-muted px-2 py-0.5 inline-block border border-border">{booking.reference}</p>
                              </div>
                           </div>
                           
                           <div className="flex items-center gap-8 lg:gap-16">
                              <div className="flex items-center gap-3">
-                                <div className="w-9 h-9 rounded-xl bg-muted flex items-center justify-center border border-border/50">
-                                   <User className="w-4 h-4 text-muted-foreground" />
+                                <div className="w-10 h-10 rounded-none bg-background flex items-center justify-center border-2 border-border">
+                                   <User className="w-4 h-4 text-foreground" />
                                 </div>
                                 <div>
-                                   <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest opacity-50">Client Info</p>
-                                   <p className="text-sm font-bold text-foreground">{booking.user?.name || 'Anonymous'}</p>
+                                   <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">Client Info</p>
+                                   <p className="text-sm font-black text-foreground uppercase tracking-tight">{booking.user?.name || 'Anonymous'}</p>
                                 </div>
                              </div>
-                             <div className="text-right">
-                                <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest opacity-50 mb-1">Status</p>
-                                <Badge className="text-[9px] font-black uppercase tracking-widest bg-emerald-500/10 text-emerald-500 border-none px-3 py-1">
+                             <div className="text-right border-l-2 border-border pl-8">
+                                <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-2">Status</p>
+                                <Badge className="text-[9px] font-black uppercase tracking-widest bg-emerald-500/10 text-emerald-500 border-2 border-emerald-500 px-3 py-1 rounded-none">
                                    {booking.status}
                                 </Badge>
                              </div>
@@ -371,24 +371,24 @@ export function ResourceDetailView({ resourceId, onBack }: ResourceDetailViewPro
            {Array.isArray(slots) && slots.map(slot => (
               <div 
                 key={slot.slotId} 
-                className={`p-6 rounded-[2rem] border transition-all duration-300 relative group/slot ${
+                className={`p-6 rounded-none border-2 transition-all duration-300 relative group/slot ${
                   slot.status === 'AVAILABLE' 
-                    ? 'bg-card/40 border-border/50 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/5 cursor-pointer' 
-                    : 'bg-muted/10 border-border/20 opacity-60'
+                    ? 'bg-background border-border hover:border-foreground hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.1)] cursor-pointer hover:-translate-y-1' 
+                    : 'bg-muted/30 border-border/50 opacity-80'
                 }`}
               >
                 <div className="space-y-4">
                    <div className="flex items-center justify-between">
-                      <div className={`w-2.5 h-2.5 rounded-full ${slot.status === 'AVAILABLE' ? 'bg-emerald-500 animate-pulse' : 'bg-muted-foreground'}`} />
-                      <span className="text-[9px] font-black uppercase tracking-widest text-muted-foreground/60">{slot.status}</span>
+                      <div className={`w-3 h-3 rounded-none border-[1.5px] ${slot.status === 'AVAILABLE' ? 'bg-emerald-500 border-emerald-700 animate-pulse' : 'bg-muted-foreground border-border'}`} />
+                      <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">{slot.status}</span>
                    </div>
                    <div>
-                      <h4 className="text-lg font-black text-foreground tracking-tight">{slot.startTime}</h4>
-                      <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Ends at {slot.endTime}</p>
+                      <h4 className="text-xl font-black text-foreground tracking-tighter uppercase">{formatDisplayTime(slot.startTime)}</h4>
+                      <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mt-1">Ends {formatDisplayTime(slot.endTime)}</p>
                    </div>
-                   <div className="pt-4 border-t border-border/20 flex items-center justify-between">
-                      <span className="text-sm font-black text-primary">₹{slot.price}</span>
-                      <ArrowUpRight className="w-4 h-4 text-primary opacity-0 group-hover/slot:opacity-100 transition-opacity" />
+                   <div className="pt-4 border-t-2 border-border border-dashed flex items-center justify-between">
+                      <span className="text-lg font-black text-primary">₹{slot.price}</span>
+                      <ArrowUpRight className="w-5 h-5 text-foreground opacity-0 group-hover/slot:opacity-100 transition-opacity" />
                    </div>
                 </div>
               </div>
@@ -611,70 +611,70 @@ export function ResourceDetailView({ resourceId, onBack }: ResourceDetailViewPro
         <div className="max-w-4xl mx-auto space-y-8">
            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Status & Identity */}
-              <div className="bg-card/40 backdrop-blur-md border border-border/50 rounded-[2.5rem] p-8 space-y-6">
+              <div className="bg-background border-2 border-border rounded-none p-8 space-y-6 shadow-[4px_4px_0_0_rgba(0,0,0,0.05)]">
                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center">
+                    <div className="w-12 h-12 rounded-none bg-primary/10 border-2 border-primary flex items-center justify-center">
                        <Zap className="w-6 h-6 text-primary" />
                     </div>
                     <div>
-                       <h3 className="text-xl font-black text-foreground">Resource Identity</h3>
-                       <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Main settings and status</p>
+                       <h3 className="text-2xl font-black uppercase tracking-tighter text-foreground">Resource Identity</h3>
+                       <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">Main settings and status</p>
                     </div>
                  </div>
                  
-                 <div className="space-y-4 pt-4">
-                    <div className="flex items-center justify-between p-4 bg-muted/20 rounded-2xl border border-border/50">
-                       <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Full Name</span>
-                       <span className="text-sm font-black text-foreground">{resourceConfig?.resourceName || 'N/A'}</span>
+                 <div className="space-y-4 pt-4 border-t-2 border-border">
+                    <div className="flex items-center justify-between p-4 bg-muted/20 border-2 border-border rounded-none">
+                       <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">Full Name</span>
+                       <span className="text-sm font-black text-foreground uppercase tracking-tight">{resourceConfig?.resourceName || 'N/A'}</span>
                     </div>
-                    <div className="flex items-center justify-between p-4 bg-muted/20 rounded-2xl border border-border/50">
-                       <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Operational Status</span>
-                       <Badge className={`text-[9px] font-black uppercase tracking-widest border-none px-4 py-1.5 ${resourceConfig?.enabled ? 'bg-emerald-500/10 text-emerald-500' : 'bg-red-500/10 text-red-500'}`}>
-                          {resourceConfig?.enabled ? 'ACTIVE ONSITE' : 'INACTIVE'}
+                    <div className="flex items-center justify-between p-4 bg-muted/20 border-2 border-border rounded-none">
+                       <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">Status</span>
+                       <Badge className={`text-[9px] font-black uppercase tracking-widest border-2 px-4 py-1.5 rounded-none ${resourceConfig?.enabled ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500' : 'bg-destructive/10 text-destructive border-destructive'}`}>
+                          {resourceConfig?.enabled ? 'ACTIVE' : 'INACTIVE'}
                        </Badge>
                     </div>
-                    <div className="flex items-center justify-between p-4 bg-muted/20 rounded-2xl border border-border/50">
-                       <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Platform ID</span>
-                       <span className="text-sm font-mono font-bold text-primary">#{resourceConfig?.id || 'N/A'}</span>
+                    <div className="flex items-center justify-between p-4 bg-muted/20 border-2 border-border rounded-none">
+                       <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">System ID</span>
+                       <span className="text-sm font-black text-primary uppercase">#{resourceConfig?.id || 'N/A'}</span>
                     </div>
                  </div>
               </div>
 
               {/* Timing Architecture */}
-              <div className="bg-card/40 backdrop-blur-md border border-border/50 rounded-[2.5rem] p-8 space-y-6">
+              <div className="bg-background border-2 border-border rounded-none p-8 space-y-6 shadow-[4px_4px_0_0_rgba(0,0,0,0.05)]">
                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center">
+                    <div className="w-12 h-12 rounded-none border-2 border-primary bg-primary/10 flex items-center justify-center">
                        <Clock className="w-6 h-6 text-primary" />
                     </div>
                     <div>
-                       <h3 className="text-xl font-black text-foreground">Timing Architecture</h3>
-                       <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Operating hours and slotting</p>
+                       <h3 className="text-2xl font-black uppercase tracking-tighter text-foreground">Timing System</h3>
+                       <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">Operating hours and slotting</p>
                     </div>
                  </div>
 
-                 <div className="grid grid-cols-2 gap-4 pt-4">
-                    <div className="p-4 bg-muted/20 rounded-2xl border border-border/50">
-                       <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-1 opacity-50">Opening</p>
-                       <p className="text-xl font-black text-foreground">
+                 <div className="grid grid-cols-2 gap-4 pt-4 border-t-2 border-border">
+                    <div className="p-4 bg-muted/20 border-2 border-border rounded-none">
+                       <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-1">Opening</p>
+                       <p className="text-2xl font-black uppercase tracking-tighter text-foreground">
                           {formatTimeStr(resourceConfig?.openingTime)}
                        </p>
                     </div>
-                    <div className="p-4 bg-muted/20 rounded-2xl border border-border/50">
-                       <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-1 opacity-50">Closing</p>
-                       <p className="text-xl font-black text-foreground">
+                    <div className="p-4 bg-muted/20 border-2 border-border rounded-none">
+                       <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-1">Closing</p>
+                       <p className="text-2xl font-black uppercase tracking-tighter text-foreground">
                           {formatTimeStr(resourceConfig?.closingTime)}
                        </p>
                     </div>
-                    <div className="col-span-2 p-4 bg-muted/20 rounded-2xl border border-border/50">
-                       <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-2 opacity-50 text-center">Slot Mechanics</p>
+                    <div className="col-span-2 p-4 bg-muted/20 border-2 border-border rounded-none">
+                       <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-4 border-b-2 border-border pb-2 text-center">Slot Mechanics</p>
                        <div className="flex items-center justify-between">
                           <div>
-                             <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-0.5">Duration</p>
-                             <p className="text-lg font-black text-foreground">{resourceConfig?.slotDurationMinutes || 0} Min</p>
+                             <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-1">Duration</p>
+                             <p className="text-2xl font-black uppercase tracking-tighter text-foreground">{resourceConfig?.slotDurationMinutes || 0} Min</p>
                           </div>
                           <div className="text-right">
-                             <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-0.5">Total Capacity</p>
-                             <p className="text-lg font-black text-primary">{resourceConfig?.totalSlots || 0} Slots</p>
+                             <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-1">Daily Capacity</p>
+                             <p className="text-2xl font-black uppercase tracking-tighter text-primary">{resourceConfig?.totalSlots || 0} Slots</p>
                           </div>
                        </div>
                     </div>

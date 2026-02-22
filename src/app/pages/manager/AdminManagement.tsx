@@ -67,8 +67,8 @@ export function AdminManagement({ onResourceClick }: AdminManagementProps) {
     <div className="space-y-6 animate-in fade-in duration-500">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-foreground">Manage Admins</h1>
-          <p className="text-muted-foreground text-sm">View and oversee all registered administrators</p>
+          <h1 className="text-3xl font-black uppercase tracking-tighter text-foreground">Manage Admins</h1>
+          <p className="text-muted-foreground text-[10px] font-bold uppercase tracking-widest mt-1">View and oversee all registered administrators</p>
         </div>
         
         <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
@@ -76,7 +76,7 @@ export function AdminManagement({ onResourceClick }: AdminManagementProps) {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
             <Input 
               placeholder="Search admins..." 
-              className="pl-10 bg-muted/50 border-border text-foreground placeholder:text-muted-foreground/60 focus-visible:ring-primary/50"
+              className="pl-10 w-full"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -112,19 +112,19 @@ export function AdminManagement({ onResourceClick }: AdminManagementProps) {
             {filteredAdmins.map((admin) => (
               <div 
                 key={admin.id} 
-                className="group relative flex flex-col bg-card/40 backdrop-blur-sm border border-border/50 rounded-2xl p-1 hover:bg-card hover:shadow-2xl hover:shadow-primary/5 hover:-translate-y-1 transition-all duration-300 overflow-hidden"
+                className="group relative flex flex-col bg-background border-2 border-border rounded-none p-1 hover:border-foreground transition-all duration-300 overflow-hidden shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] hover:shadow-[8px_8px_0_0_rgba(0,0,0,0.1)] hover:-translate-y-1 dark:shadow-[4px_4px_0_0_rgba(255,255,255,0.02)] dark:hover:shadow-[8px_8px_0_0_rgba(255,255,255,0.05)]"
               >
                 {/* Decorative background element */}
                 <div className="absolute -right-4 -top-4 w-24 h-24 bg-primary/5 rounded-full blur-2xl group-hover:bg-primary/10 transition-colors" />
                 
                 {/* Header: Avatar & Main Info */}
                 <div className="flex items-start gap-4 mb-6">
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary font-bold text-lg border border-primary/20 shrink-0">
+                  <div className="w-12 h-12 rounded-none bg-primary/10 flex items-center justify-center text-primary font-black text-xl border-2 border-primary shrink-0 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                     {admin.name.charAt(0).toUpperCase()}
                   </div>
                   <div className="min-w-0">
-                    <h3 className="text-lg font-bold text-foreground truncate group-hover:text-primary transition-colors">{admin.name}</h3>
-                    <p className="text-xs text-muted-foreground font-mono tracking-tighter overflow-hidden text-ellipsis">ID: {admin.userId}</p>
+                    <h3 className="text-lg font-black uppercase tracking-tight text-foreground truncate group-hover:text-primary transition-colors">{admin.name}</h3>
+                    <p className="text-[10px] text-muted-foreground font-black uppercase tracking-widest overflow-hidden text-ellipsis mt-0.5">ID: {admin.userId}</p>
                   </div>
                 </div>
 
@@ -132,21 +132,21 @@ export function AdminManagement({ onResourceClick }: AdminManagementProps) {
                 <div className="space-y-4 flex-grow">
                   <div className="space-y-2">
                     <div className="flex items-center gap-2.5 text-sm text-foreground/70">
-                      <div className="w-7 h-7 rounded-lg bg-muted/50 flex items-center justify-center shrink-0">
-                        <Mail className="w-3.5 h-3.5 text-muted-foreground" />
+                      <div className="w-8 h-8 rounded-none border-2 border-border bg-muted/10 flex items-center justify-center shrink-0">
+                        <Mail className="w-4 h-4 text-foreground" />
                       </div>
-                      <span className="truncate">{admin.email}</span>
+                      <span className="truncate font-bold">{admin.email}</span>
                     </div>
                   </div>
 
                   <div className="pt-4 border-t border-border/50 space-y-2">
-                    <div className="flex items-start gap-2.5 text-sm">
-                      <div className="w-7 h-7 rounded-lg bg-muted/50 flex items-center justify-center shrink-0 mt-0.5">
-                        <Building2 className="w-3.5 h-3.5 text-muted-foreground" />
+                    <div className="flex items-start gap-3 text-sm">
+                      <div className="w-8 h-8 rounded-none border-2 border-border bg-muted/10 flex items-center justify-center shrink-0 mt-0.5">
+                        <Building2 className="w-4 h-4 text-foreground" />
                       </div>
                       <div className="min-w-0">
-                        <p className="font-semibold text-foreground truncate">{admin.businessName}</p>
-                        <div className="flex items-center gap-1.5 text-xs text-muted-foreground mt-0.5">
+                        <p className="font-black text-foreground uppercase tracking-tight truncate">{admin.businessName}</p>
+                        <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-muted-foreground mt-1">
                           <MapPin className="w-3 h-3 shrink-0" />
                           <span className="truncate">{admin.businessAddress}, {admin.city}</span>
                         </div>
@@ -157,20 +157,19 @@ export function AdminManagement({ onResourceClick }: AdminManagementProps) {
 
                 {/* Footer: Tax ID & Actions */}
                 <div className="mt-6 pt-4 border-t border-border/50 flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-primary/5 border border-primary/10">
-                    <FileText className="w-3.5 h-3.5 text-primary" />
-                    <span className="text-[11px] font-mono text-primary font-bold tracking-tight uppercase">{admin.gstNumber}</span>
+                  <div className="flex items-center gap-2 px-3 py-2 rounded-none bg-primary/5 border-2 border-primary">
+                    <FileText className="w-4 h-4 text-primary" />
+                    <span className="text-[10px] font-black text-primary uppercase tracking-widest">{admin.gstNumber}</span>
                   </div>
                   <Button 
-                    variant="ghost" 
+                    variant="outline" 
                     size="sm"
                     onClick={() => {
                       setSelectedAdmin(admin);
                       setIsDetailOpen(true);
                     }}
-                    className="text-primary hover:text-primary hover:bg-primary/10 font-bold text-xs h-9"
                   >
-                    View Details
+                    Details
                   </Button>
                 </div>
               </div>
@@ -180,8 +179,8 @@ export function AdminManagement({ onResourceClick }: AdminManagementProps) {
       </div>
 
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 pb-4">
-        <p className="text-sm text-muted-foreground">
-          Showing <span className="text-foreground font-bold">{filteredAdmins.length}</span> of <span className="text-foreground font-bold">{admins.length}</span> administrators
+        <p className="text-[10px] font-black tracking-widest uppercase text-muted-foreground">
+          Showing <span className="text-foreground">{filteredAdmins.length}</span> of <span className="text-foreground">{admins.length}</span>
         </p>
         
         <div className="flex items-center gap-3">
@@ -219,7 +218,6 @@ export function AdminManagement({ onResourceClick }: AdminManagementProps) {
             size="sm"
             onClick={() => setPage(p => p + 1)}
             disabled={page >= totalPages - 1 || loading}
-            className="border-border/50 bg-card/30 backdrop-blur-sm text-muted-foreground hover:bg-muted hover:text-foreground h-10 px-4 rounded-xl"
           >
             Next <ChevronRight className="w-4 h-4 ml-1.5" />
           </Button>

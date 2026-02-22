@@ -38,19 +38,19 @@ export function ResourceList({
   }
 
   return (
-    <div className="space-y-3">
-      <div className="flex items-center justify-between px-2 pb-1">
+    <div className="space-y-4">
+      <div className="flex items-center justify-between px-2 pb-2 border-b-2 border-border">
         <div className="flex items-center gap-2">
-          <Settings2 className="w-3.5 h-3.5 text-primary" />
-          <h4 className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Available Resources</h4>
+          <Settings2 className="w-4 h-4 text-primary" />
+          <h4 className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">Available Resources</h4>
         </div>
         <Button 
           variant="outline" 
           size="sm" 
-          className="h-7 rounded-lg gap-1.5 text-[9px] font-bold border-primary/20 text-primary hover:bg-primary/5"
+          className="h-8 rounded-none gap-2 text-[10px] font-black uppercase tracking-widest border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all"
           onClick={(e) => onAddResource(e, service)}
         >
-          <Layout className="w-3 h-3" />
+          <Layout className="w-3.5 h-3.5" />
           Add Resource
         </Button>
       </div>
@@ -60,30 +60,30 @@ export function ResourceList({
           <p className="text-xs text-muted-foreground italic">No resources available for this service</p>
         </div>
       ) : (
-        <div className="grid gap-2">
+        <div className="grid gap-3">
           {resources.map((resource) => (
             <div 
               key={resource.id} 
               onClick={() => onResourceClick(resource.id)}
-              className="bg-background/60 rounded-xl p-3 border border-border/50 group/res transition-all hover:bg-background/80 hover:border-primary/20 cursor-pointer"
+              className="bg-background rounded-none p-4 border-2 border-border group/res transition-all hover:border-foreground cursor-pointer shadow-[2px_2px_0_0_rgba(0,0,0,0.05)] hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.1)] hover:-translate-y-0.5"
             >
-              <div className="flex items-start justify-between gap-3">
-                <div className="flex items-start gap-3 min-w-0">
-                  <div className="w-8 h-8 rounded-lg bg-primary/5 flex items-center justify-center shrink-0 mt-0.5">
-                    <Layout className="w-4 h-4 text-primary/60" />
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex items-start gap-4 min-w-0">
+                  <div className="w-10 h-10 rounded-none border-[1.5px] border-border group-hover:border-primary bg-muted/50 flex items-center justify-center shrink-0 transition-colors">
+                    <Layout className="w-5 h-5 text-foreground group-hover:text-primary transition-colors" />
                   </div>
                   <div className="min-w-0">
-                    <p className="text-xs font-bold text-foreground truncate">{resource.name}</p>
-                    <p className="text-[10px] text-muted-foreground leading-relaxed mt-0.5 line-clamp-2">{resource.description}</p>
+                    <p className="text-sm font-black uppercase tracking-tight text-foreground truncate">{resource.name}</p>
+                    <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mt-1 line-clamp-2">{resource.description}</p>
                   </div>
                 </div>
-                <div className={`px-2 py-0.5 rounded-lg border text-[9px] font-bold uppercase shrink-0 ${resource.enabled ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-500' : 'bg-muted border-border text-muted-foreground'}`}>
+                <div className={`px-3 py-1 rounded-none border-2 text-[10px] font-black uppercase tracking-widest shrink-0 ${resource.enabled ? 'bg-emerald-500/10 border-emerald-500 text-emerald-500' : 'bg-destructive/10 border-destructive text-destructive'}`}>
                   {resource.enabled ? 'Enabled' : 'Disabled'}
                 </div>
               </div>
-              <div className="flex flex-wrap gap-1.5 mt-3">
+              <div className="flex flex-wrap gap-2 mt-4">
                 {resource.activities.map((activity) => (
-                  <span key={activity.id} className={`text-[9px] font-bold px-2 py-0.5 rounded-md border ${activity.enabled ? 'bg-primary/5 border-primary/20 text-primary' : 'bg-muted border-border text-muted-foreground opacity-50'}`}>
+                  <span key={activity.id} className={`text-[9px] font-black uppercase tracking-widest px-2 py-1 rounded-none border-2 ${activity.enabled ? 'bg-primary/5 border-primary text-primary' : 'bg-muted border-border text-muted-foreground opacity-70'}`}>
                     {activity.name}
                   </span>
                 ))}

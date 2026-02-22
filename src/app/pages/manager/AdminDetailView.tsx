@@ -278,17 +278,17 @@ export function AdminDetailView({ admin, open, onClose, onResourceClick }: Admin
     <>
       <Sheet open={open} onOpenChange={onClose}>
         <SheetContent className="w-full sm:max-w-2xl bg-background border-l border-border overflow-y-auto p-0 gap-0">
-          <div className="sticky top-0 z-10 bg-background/80 backdrop-blur-md border-b border-border px-6 py-4 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-               <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+          <div className="sticky top-0 z-10 bg-background border-b-2 border-border px-6 py-4 flex items-center justify-between">
+            <div className="flex items-center gap-4">
+               <div className="w-12 h-12 rounded-none bg-primary/10 border-2 border-primary flex items-center justify-center">
                   <ShieldCheck className="w-6 h-6 text-primary" />
                </div>
                <div>
-                  <h2 className="text-xl font-bold text-foreground leading-tight">{admin.name}</h2>
-                  <p className="text-xs text-muted-foreground font-mono">ADMIN ID: {admin.userId}</p>
+                  <h2 className="text-2xl font-black uppercase tracking-tighter text-foreground leading-tight">{admin.name}</h2>
+                  <p className="text-[10px] font-black tracking-widest text-muted-foreground uppercase">ADMIN ID: {admin.userId}</p>
                </div>
             </div>
-            <Button variant="ghost" size="icon" onClick={onClose} className="rounded-full">
+            <Button variant="outline" size="icon" onClick={onClose} className="rounded-none border-2 h-12 w-12 hover:bg-foreground hover:text-background transition-colors">
               <X className="w-5 h-5" />
             </Button>
           </div>
@@ -297,7 +297,7 @@ export function AdminDetailView({ admin, open, onClose, onResourceClick }: Admin
             <AdminSummaryCards totalServices={services.length} />
             <div className="space-y-4">
                <div className="flex items-center justify-between">
-                  <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
+                  <h3 className="text-sm font-black uppercase tracking-widest text-foreground flex items-center gap-2">
                      <TrendingUp className="w-4 h-4 text-primary" />
                      Revenue Analytics
                   </h3>
@@ -305,7 +305,7 @@ export function AdminDetailView({ admin, open, onClose, onResourceClick }: Admin
                     variant="outline" 
                     size="sm" 
                     onClick={() => setIsRevenueSheetOpen(true)}
-                    className="h-8 rounded-lg gap-1.5 text-[11px] font-bold border-primary/20 text-primary hover:bg-primary/5 shadow-sm"
+                    className="h-8 rounded-none gap-1.5 text-[10px] font-black uppercase tracking-widest border-2 border-border hover:border-primary text-primary hover:bg-primary/5 transition-all"
                   >
                      <TrendingUp className="w-3.5 h-3.5" />
                      Detailed Breakdown
@@ -316,11 +316,11 @@ export function AdminDetailView({ admin, open, onClose, onResourceClick }: Admin
 
             <div className="space-y-4">
                <div className="flex items-center justify-between">
-                  <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
+                  <h3 className="text-sm font-black uppercase tracking-widest text-foreground flex items-center gap-2">
                      <Package className="w-4 h-4 text-primary" />
                      Linked Services
                   </h3>
-                  <Button variant="outline" size="sm" onClick={handleAddServiceClick} className="h-8 rounded-lg gap-1.5 text-[11px] font-bold border-primary/20 text-primary hover:bg-primary/5">
+                  <Button variant="outline" size="sm" onClick={handleAddServiceClick} className="h-8 rounded-none gap-1.5 text-[10px] font-black uppercase tracking-widest border-2 border-border hover:border-primary text-primary hover:bg-primary/5 transition-all">
                      <Package className="w-3.5 h-3.5" />
                      Add Service
                   </Button>
@@ -332,15 +332,15 @@ export function AdminDetailView({ admin, open, onClose, onResourceClick }: Admin
                      <p className="text-sm font-medium text-muted-foreground">Fetching services...</p>
                   </div>
                ) : error ? (
-                  <div className="p-4 rounded-xl bg-destructive/10 border border-destructive/20 flex items-center gap-3 text-destructive">
+                  <div className="p-4 rounded-none bg-destructive/10 border-2 border-destructive flex items-center gap-3 text-destructive font-black uppercase tracking-widest text-[10px]">
                      <AlertCircle className="w-5 h-5 flex-shrink-0" />
-                     <p className="text-sm font-medium">{error}</p>
-                     <Button variant="ghost" size="sm" className="ml-auto h-8 text-destructive hover:bg-destructive/10" onClick={() => fetchServices()}>Retry</Button>
+                     <p className="flex-1">{error}</p>
+                     <Button variant="outline" size="sm" className="h-8 rounded-none border-2 border-destructive text-destructive hover:bg-destructive hover:text-destructive-foreground transition-all" onClick={() => fetchServices()}>Retry</Button>
                   </div>
                ) : services.length === 0 ? (
-                  <div className="flex flex-col items-center justify-center py-12 border border-dashed border-border rounded-2xl bg-muted/5">
-                     <Package className="w-8 h-8 text-muted-foreground/30 mb-2" />
-                     <p className="text-sm font-medium text-muted-foreground">No services found</p>
+                  <div className="flex flex-col items-center justify-center py-12 border-2 border-dashed border-border rounded-none bg-muted/5">
+                     <Package className="w-8 h-8 text-foreground mb-4" />
+                     <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">No services found</p>
                   </div>
                ) : (
                   <>

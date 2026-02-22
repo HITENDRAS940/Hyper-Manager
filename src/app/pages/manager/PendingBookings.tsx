@@ -90,11 +90,11 @@ export function PendingBookings() {
         </div>
         
         <div className="flex items-center gap-3">
-           <div className="bg-primary/5 border border-primary/10 rounded-2xl p-4 min-w-[160px]">
-              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1">Awaiting Action</p>
+           <div className="bg-primary/5 border-2 border-primary/20 p-4 min-w-[160px] rounded-none">
+              <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-1">Awaiting Action</p>
               <div className="flex items-center justify-between">
-                 <h3 className="text-2xl font-black text-foreground">{bookings.length}</h3>
-                 <span className="flex items-center text-[10px] font-extrabold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
+                 <h3 className="text-3xl font-black text-foreground uppercase tracking-tighter">{bookings.length}</h3>
+                 <span className="flex items-center text-[10px] font-black text-primary bg-primary/10 px-2 py-1 rounded-none border border-primary/20">
                     Bookings
                  </span>
               </div>
@@ -103,21 +103,21 @@ export function PendingBookings() {
       </div>
 
       {/* Control Bar */}
-      <div className="flex items-center justify-between bg-card/30 backdrop-blur-md border border-border/50 p-2 rounded-2xl">
+      <div className="flex items-center justify-between bg-background border-2 border-border p-2 rounded-none shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] dark:shadow-[4px_4px_0_0_rgba(255,255,255,0.02)]">
          <div className="relative flex-1 max-w-md">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input 
               placeholder="Filter by reference, service or user..." 
-              className="pl-10 h-11 bg-background/50 border-none focus-visible:ring-1 focus-visible:ring-primary rounded-xl transition-all"
+              className="pl-10 h-10 bg-background border-none focus-visible:ring-2 focus-visible:ring-primary rounded-none transition-all shadow-none"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
          </div>
          <Button 
-            variant="ghost" 
+            variant="outline" 
             onClick={fetchPendingBookings}
             disabled={loading}
-            className="h-11 px-6 font-bold text-xs uppercase tracking-widest gap-2"
+            className="h-10 px-6 font-black text-xs uppercase tracking-widest gap-2 border-2"
           >
             {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <TrendingUp className="w-4 h-4" />}
             Refresh
@@ -160,7 +160,7 @@ export function PendingBookings() {
           {filteredBookings.map((booking) => (
             <div 
               key={booking.id} 
-              className="group relative bg-card/40 backdrop-blur-sm border border-border/50 rounded-[2rem] p-6 hover:bg-card/60 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/5 hover:-translate-y-1 overflow-hidden"
+              className="group relative bg-background border-2 border-border hover:border-foreground rounded-none p-6 transition-all duration-300 shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] hover:shadow-[8px_8px_0_0_rgba(0,0,0,0.1)] hover:-translate-y-1 overflow-hidden"
             >
               <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -translate-y-16 translate-x-16 blur-3xl group-hover:bg-primary/10 transition-colors" />
               
@@ -168,22 +168,22 @@ export function PendingBookings() {
                 {/* Reference & Service */}
                 <div className="lg:col-span-4 space-y-3">
                   <div className="flex items-center gap-3">
-                     <span className="text-[10px] font-black bg-primary/10 text-primary px-3 py-1 rounded-full uppercase tracking-tighter shadow-sm border border-primary/20">
+                     <span className="text-[10px] font-black bg-primary/10 text-primary px-3 py-1 rounded-none uppercase tracking-widest border-2 border-primary/20">
                         {booking.reference}
                      </span>
-                     <span className="text-[10px] font-bold text-muted-foreground/60 uppercase tracking-widest">
+                     <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest bg-muted/50 px-2 py-1 border border-border">
                         Ref Code
                      </span>
                   </div>
                   <div>
-                    <h3 className="text-2xl font-extrabold text-foreground group-hover:text-primary transition-colors duration-300 leading-tight">
+                    <h3 className="text-3xl font-black uppercase tracking-tighter text-foreground group-hover:text-primary transition-colors duration-300 leading-tight">
                       {booking.serviceName}
                     </h3>
                     <div className="flex items-center gap-2 mt-2">
-                       <div className="w-6 h-6 rounded-md bg-muted flex items-center justify-center">
-                          <Package className="w-3.5 h-3.5 text-muted-foreground" />
+                       <div className="w-6 h-6 rounded-none border border-border bg-muted flex items-center justify-center">
+                          <Package className="w-3.5 h-3.5 text-foreground" />
                        </div>
-                       <p className="text-sm font-bold text-muted-foreground uppercase tracking-tight">{booking.resourceName}</p>
+                       <p className="text-sm font-black text-muted-foreground uppercase tracking-widest">{booking.resourceName}</p>
                     </div>
                   </div>
                 </div>
@@ -192,21 +192,21 @@ export function PendingBookings() {
                 <div className="lg:col-span-3">
                   <div className="space-y-4">
                     <div className="flex items-center gap-4">
-                       <div className="w-10 h-10 rounded-2xl bg-muted/50 flex items-center justify-center border border-border/50 group-hover:bg-primary/5 group-hover:border-primary/10 transition-colors">
-                          <CalendarIcon className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                       <div className="w-10 h-10 rounded-none bg-muted/50 flex items-center justify-center border-2 border-border group-hover:bg-primary/5 group-hover:border-primary/20 transition-colors">
+                          <CalendarIcon className="w-5 h-5 text-foreground group-hover:text-primary transition-colors" />
                        </div>
                        <div>
-                          <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-0.5">Booking Date</p>
-                          <p className="text-sm font-bold text-foreground">{new Date(booking.bookingDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
+                          <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-0.5">Booking Date</p>
+                          <p className="text-sm font-black text-foreground">{new Date(booking.bookingDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
                        </div>
                     </div>
                     <div className="flex items-center gap-4">
-                       <div className="w-10 h-10 rounded-2xl bg-muted/50 flex items-center justify-center border border-border/50 group-hover:bg-primary/5 group-hover:border-primary/10 transition-colors">
-                          <Clock className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                       <div className="w-10 h-10 rounded-none bg-muted/50 flex items-center justify-center border-2 border-border group-hover:bg-primary/5 group-hover:border-primary/20 transition-colors">
+                          <Clock className="w-5 h-5 text-foreground group-hover:text-primary transition-colors" />
                        </div>
                        <div>
-                          <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-0.5">Time Slot</p>
-                          <p className="text-sm font-bold text-foreground tracking-tight">{booking.startTime} - {booking.endTime}</p>
+                          <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-0.5">Time Slot</p>
+                          <p className="text-sm font-black text-foreground tracking-tight">{booking.startTime} - {booking.endTime}</p>
                        </div>
                     </div>
                   </div>
@@ -214,15 +214,15 @@ export function PendingBookings() {
 
                 {/* User Info */}
                 <div className="lg:col-span-3">
-                   <div className="p-4 rounded-2xl bg-muted/30 border border-border/30 group-hover:bg-muted/50 transition-colors">
+                   <div className="p-4 rounded-none bg-background border-2 border-border group-hover:border-foreground transition-all">
                       <div className="flex items-center gap-3 mb-2">
-                         <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                         <div className="w-8 h-8 rounded-none border border-primary bg-primary/10 flex items-center justify-center">
                             <User className="w-4 h-4 text-primary" />
                          </div>
-                         <p className="text-sm font-bold text-foreground">{booking.user.name}</p>
+                         <p className="text-sm font-black text-foreground uppercase tracking-tight">{booking.user.name}</p>
                       </div>
                       <div className="space-y-1 ml-11">
-                         <p className="text-[10px] font-bold text-primary/70 uppercase tracking-tighter">Verified Client</p>
+                         <p className="text-[10px] font-black text-primary/70 uppercase tracking-widest">Verified Client</p>
                       </div>
                    </div>
                 </div>
@@ -237,19 +237,19 @@ export function PendingBookings() {
                     <Button 
                       onClick={() => handleApprove(booking.id)}
                       disabled={approvingIds[booking.id] || cancelingIds[booking.id]}
-                      className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-black text-xs uppercase tracking-[0.15em] py-5 rounded-xl shadow-lg shadow-primary/10 transition-all gap-2"
+                      className="w-full bg-primary hover:bg-primary border-2 border-transparent hover:border-foreground text-primary-foreground font-black text-xs uppercase tracking-[0.15em] py-5 rounded-none shadow-[2px_2px_0_0_rgba(0,0,0,0.1)] transition-all gap-2"
                     >
                       {approvingIds[booking.id] ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <CheckCircle2 className="w-3.5 h-3.5" />}
                       Approve
                     </Button>
                     <Button 
-                      variant="ghost"
+                      variant="outline"
                       onClick={() => handleCancel(booking.id)}
                       disabled={approvingIds[booking.id] || cancelingIds[booking.id]}
-                      className="w-full text-destructive hover:text-destructive hover:bg-destructive/10 font-bold text-xs uppercase tracking-widest py-5 rounded-xl transition-all gap-2"
+                      className="w-full text-destructive hover:text-destructive-foreground border-2 border-destructive bg-destructive/5 hover:bg-destructive font-black text-xs uppercase tracking-widest py-5 rounded-none transition-all gap-2"
                     >
                       {cancelingIds[booking.id] ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <XCircle className="w-3.5 h-3.5" />}
-                      Cancel
+                      Reject
                     </Button>
                   </div>
                 </div>

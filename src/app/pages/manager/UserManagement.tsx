@@ -16,7 +16,8 @@ import {
   Clock,
   Eye,
   Mail,
-  Phone
+  Phone,
+  Download
 } from "lucide-react";
 import { managerApi, AppUser, AllBooking } from "../../api/managerApi";
 import { Button } from "../../components/ui/button";
@@ -93,6 +94,45 @@ export function UserManagement() {
     }
   }, [selectedUser]);
 
+  const handleExportData = () => {
+    if (!users || users.length === 0) return;
+
+    const headers = [
+      "ID",
+      "Name",
+      "Email",
+      "Phone",
+      "Status",
+      "Total Bookings",
+      "Confirmed Bookings",
+      "Cancelled Bookings"
+    ];
+
+    const csvContent = [
+      headers.join(","),
+      ...users.map(user => [
+        user.id,
+        `"${user.name || ''}"`,
+        `"${user.email || ''}"`,
+        `"${user.phone || ''}"`,
+        user.enabled ? "Active" : "Disabled",
+        user.totalBookings || 0,
+        user.confirmedBookings || 0,
+        user.cancelledBookings || 0
+      ].join(","))
+    ].join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", `users_export_${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.visibility = "hidden";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   const filteredUsers = Array.isArray(users) ? users.filter(user => 
     user?.name?.toLowerCase().includes(searchQuery.toLowerCase())
   ) : [];
@@ -102,9 +142,9 @@ export function UserManagement() {
       {/* Header Section */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
         <div className="space-y-1">
-          <h2 className="text-4xl font-black tracking-tight text-foreground flex items-center gap-4">
+          <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-foreground flex flex-wrap items-center gap-4">
             User Management
-            <Badge variant="outline" className="text-[10px] font-black uppercase tracking-widest border-2 py-1 px-3 bg-primary/5 text-primary border-primary/20">
+            <Badge variant="default" className="text-[10px]">
               {totalElements} Total
             </Badge>
           </h2>
@@ -121,11 +161,15 @@ export function UserManagement() {
               placeholder="Search by name..." 
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 h-11 w-full lg:w-[320px] bg-card/50 border-border/50 rounded-2xl focus:ring-primary shadow-sm"
+              className="pl-10 w-full lg:w-[320px]"
             />
           </div>
-          <Button className="h-11 px-6 rounded-2xl gap-2 font-bold shadow-lg shadow-primary/20">
-            <UserPlus className="w-4 h-4" />
+          <Button 
+            onClick={handleExportData}
+            disabled={!users || users.length === 0}
+            className="gap-2 shadow-[4px_4px_0_0_rgba(0,0,0,0.1)] dark:shadow-[4px_4px_0_0_rgba(255,255,255,0.05)]"
+          >
+            <Download className="w-4 h-4" />
             Export Data
           </Button>
         </div>
@@ -152,13 +196,13 @@ export function UserManagement() {
             </div>
           ) : (
             filteredUsers.map((user) => (
-              <div key={user.id} className="group bg-card/40 backdrop-blur-md border border-border/50 rounded-[2.5rem] p-6 hover:bg-card transition-all duration-300 relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -translate-y-16 translate-x-16 blur-3xl group-hover:bg-primary/10 transition-colors" />
+              <div key={user.id} className="group bg-background border-2 border-border hover:border-foreground rounded-none p-0 transition-all duration-300 relative overflow-hidden flex flex-col xl:flex-row shadow-[4px_4px_0_0_rgba(0,0,0,0.05)] hover:shadow-[8px_8px_0_0_rgba(0,0,0,0.1)] hover:-translate-y-1 dark:shadow-[4px_4px_0_0_rgba(255,255,255,0.02)] dark:hover:shadow-[8px_8px_0_0_rgba(255,255,255,0.05)]">
+                <div className="w-full xl:w-2 h-2 xl:h-auto bg-primary/20 group-hover:bg-primary transition-colors" />
                 
-                <div className="flex flex-col xl:flex-row items-start xl:items-center justify-between gap-8 relative z-10">
+                <div className="flex flex-col xl:flex-row items-start xl:items-center justify-between gap-8 relative z-10 p-6 flex-1">
                   {/* Primary Info */}
                   <div className="flex items-center gap-5 min-w-[300px]">
-                    <Avatar className="h-14 w-14 border-2 border-primary/20 rounded-2xl">
+                    <Avatar className="h-14 w-14 border-2 border-primary">
                       <AvatarFallback className="bg-primary/10 text-primary font-black text-xl">
                         {user.name ? user.name.split(' ').filter(Boolean).map(n => n[0]).join('').slice(0, 2).toUpperCase() : '??'}
                       </AvatarFallback>
@@ -166,8 +210,8 @@ export function UserManagement() {
                     <div className="space-y-1">
                       <h3 className="text-xl font-black text-foreground group-hover:text-primary transition-colors">{user.name}</h3>
                       <div className="flex items-center gap-3">
-                        <div className={`px-2 py-0.5 rounded-lg text-[9px] font-black uppercase tracking-widest ${user.enabled ? 'bg-emerald-500/10 text-emerald-500' : 'bg-destructive/10 text-destructive'}`}>
-                          {user.enabled ? <ShieldCheck className="w-3 h-3 inline mr-1" /> : <ShieldAlert className="w-3 h-3 inline mr-1" />}
+                        <div className={`px-2 py-1 rounded-none border-2 text-[10px] font-black uppercase tracking-widest flex items-center gap-1 ${user.enabled ? 'border-emerald-500 text-emerald-500 bg-emerald-500/10' : 'border-destructive text-destructive bg-destructive/10'}`}>
+                          {user.enabled ? <ShieldCheck className="w-3 h-3" /> : <ShieldAlert className="w-3 h-3" />}
                           {user.enabled ? 'Active' : 'Disabled'}
                         </div>
                       </div>
@@ -193,7 +237,7 @@ export function UserManagement() {
                     <div className="space-y-1">
                       <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest opacity-60">Total Bookings</p>
                       <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                        <div className="w-8 h-8 rounded-none border-2 border-primary bg-primary/10 flex items-center justify-center">
                           <Calendar className="w-4 h-4 text-primary" />
                         </div>
                         <span className="text-lg font-black text-foreground">{user.totalBookings}</span>
@@ -203,8 +247,8 @@ export function UserManagement() {
                     <div className="space-y-1">
                       <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest opacity-60">Revenue Performance</p>
                       <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-lg bg-indigo-500/10 flex items-center justify-center">
-                          <TrendingUp className="w-4 h-4 text-indigo-500" />
+                        <div className="w-8 h-8 rounded-none border-2 border-primary bg-primary/10 flex items-center justify-center">
+                          <TrendingUp className="w-4 h-4 text-primary" />
                         </div>
                         <div className="flex flex-col">
                           <span className="text-sm font-bold text-foreground">₹{((user.confirmedBookings || 0) * 500).toLocaleString()}</span>
@@ -223,12 +267,12 @@ export function UserManagement() {
                         </p>
                       </div>
                       <Button 
-                        variant="ghost" 
+                        variant="outline" 
                         size="icon" 
                         onClick={() => setSelectedUser(user)}
-                        className="h-10 w-10 rounded-xl hover:bg-muted group/btn"
+                        className="h-12 w-12 group/btn shadow-[2px_2px_0_0_rgba(0,0,0,0.1)] dark:shadow-[2px_2px_0_0_rgba(255,255,255,0.05)] active:shadow-none active:translate-y-[2px] active:translate-x-[2px]"
                       >
-                        <History className="w-4 h-4 text-muted-foreground group-hover/btn:text-primary transition-colors" />
+                        <History className="w-5 h-5 text-foreground group-hover/btn:text-primary transition-colors" />
                       </Button>
                     </div>
                   </div>
@@ -251,7 +295,6 @@ export function UserManagement() {
               size="sm" 
               disabled={page === 0}
               onClick={() => setPage(p => p - 1)}
-              className="rounded-xl h-9 px-4 font-bold border-border/50"
             >
               <ChevronLeft className="w-4 h-4 mr-1" />
               Previous
@@ -261,7 +304,6 @@ export function UserManagement() {
               size="sm" 
               disabled={page === totalPages - 1}
               onClick={() => setPage(p => p + 1)}
-              className="rounded-xl h-9 px-4 font-bold border-border/50"
             >
               Next
               <ChevronRight className="w-4 h-4 ml-1" />
@@ -274,7 +316,7 @@ export function UserManagement() {
         <SheetContent className="w-full sm:max-w-xl bg-background border-l border-border/50 p-0 overflow-hidden flex flex-col">
           <SheetHeader className="p-8 border-b border-border/50 bg-card/30">
             <div className="flex items-center gap-4 mb-4">
-              <Avatar className="h-12 w-12 border-2 border-primary/20 rounded-xl">
+              <Avatar className="h-14 w-14 border-2 border-primary">
                 <AvatarFallback className="bg-primary/10 text-primary font-black">
                   {selectedUser?.name.split(' ').map(n => n[0]).join('')}
                 </AvatarFallback>
@@ -297,7 +339,7 @@ export function UserManagement() {
               </div>
             ) : userBookings.length === 0 ? (
               <div className="py-32 flex flex-col items-center justify-center text-center space-y-4">
-                <div className="w-16 h-16 rounded-full bg-muted/30 flex items-center justify-center">
+                <div className="w-16 h-16 rounded-none border-2 border-border bg-muted/10 flex items-center justify-center">
                   <Calendar className="w-8 h-8 text-muted-foreground/30" />
                 </div>
                 <div className="space-y-1">
@@ -311,13 +353,13 @@ export function UserManagement() {
                   <div 
                     key={booking.id} 
                     onClick={() => setSelectedDetailBookingId(booking.id)}
-                    className="bg-muted/20 border border-border/50 rounded-2xl p-5 hover:bg-muted/30 transition-all group cursor-pointer"
+                    className="bg-background border-2 border-border hover:border-foreground rounded-none p-5 transition-all group cursor-pointer flex items-stretch shadow-[2px_2px_0_0_rgba(0,0,0,0.05)] hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.1)] hover:-translate-y-0.5"
                   >
                     <div className="flex items-start justify-between gap-4">
                       <div className="space-y-3">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-xl bg-background flex items-center justify-center border border-border/50 group-hover:border-primary/20 transition-colors">
-                            <TrendingUp className="w-5 h-5 text-primary/60" />
+                          <div className="w-10 h-10 rounded-none bg-background flex items-center justify-center border-2 border-border group-hover:border-primary transition-colors">
+                            <TrendingUp className="w-5 h-5 text-foreground group-hover:text-primary transition-colors" />
                           </div>
                           <div>
                             <p className="text-xs font-black text-foreground truncate max-w-[180px]">{booking.serviceName}</p>
@@ -336,10 +378,10 @@ export function UserManagement() {
                         </div>
                       </div>
                       <div className="text-right space-y-2">
-                        <Badge className={`text-[9px] font-black uppercase tracking-widest px-2 py-0.5 border-none ${
-                          booking.status === 'CONFIRMED' ? 'bg-emerald-500/10 text-emerald-500' :
-                          booking.status === 'PENDING' ? 'bg-amber-500/10 text-amber-500' :
-                          'bg-destructive/10 text-destructive'
+                        <Badge variant="outline" className={`text-[9px] font-black uppercase tracking-widest px-2 py-1 border-2 ${
+                          booking.status === 'CONFIRMED' ? 'border-emerald-500 text-emerald-500 bg-emerald-500/10' :
+                          booking.status === 'PENDING' ? 'border-amber-500 text-amber-500 bg-amber-500/10' :
+                          'border-destructive text-destructive bg-destructive/10'
                         }`}>
                           {booking.status}
                         </Badge>
@@ -351,8 +393,8 @@ export function UserManagement() {
                 
                 {historyPage < historyTotalPages - 1 && (
                   <Button 
-                    variant="ghost" 
-                    className="w-full h-12 rounded-xl text-[10px] font-black uppercase tracking-widest text-primary hover:bg-primary/5 mt-2"
+                    variant="outline" 
+                    className="w-full h-12 rounded-none border-2 border-border border-dashed hover:border-solid hover:border-primary text-[10px] font-black uppercase tracking-widest text-primary hover:bg-primary/5 mt-2"
                     onClick={() => {
                       const next = historyPage + 1;
                       setHistoryPage(next);

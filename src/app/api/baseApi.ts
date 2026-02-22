@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://hyper-render-prod.onrender.com';
+export const BASE_URL = import.meta.env.VITE_API_URL;
 
 interface ApiRequestOptions extends RequestInit {
     data?: any;

@@ -42,50 +42,50 @@ export function ServiceCard({
   deletingImages
 }: ServiceCardProps) {
   return (
-    <div className="flex flex-col border border-border rounded-2xl overflow-hidden bg-card/50 transition-all duration-300">
+    <div className="flex flex-col border-2 border-border rounded-none overflow-hidden bg-background transition-all duration-300">
       <div 
-        className={`group flex items-center justify-between p-4 cursor-pointer hover:bg-card transition-colors ${isExpanded ? 'bg-card' : ''}`} 
+        className={`group flex items-center justify-between p-4 cursor-pointer hover:bg-muted transition-colors ${isExpanded ? 'bg-muted/50' : ''}`} 
         onClick={() => onToggle(service.id)}
       >
-        <div className="flex items-center gap-3 min-w-0">
-          <div className="w-12 h-12 rounded-xl overflow-hidden bg-muted flex-shrink-0 border border-border/50">
+        <div className="flex items-center gap-4 min-w-0">
+          <div className="w-16 h-16 rounded-none overflow-hidden bg-muted/50 flex-shrink-0 border-2 border-border group-hover:border-foreground transition-colors">
             {service.images?.[0] ? (
-              <img src={service.images[0]} alt={service.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+              <img src={service.images[0]} alt={service.name} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
             ) : (
               <div className="w-full h-full flex items-center justify-center bg-primary/5">
-                <Package className="w-5 h-5 text-primary/30" />
+                <Package className="w-6 h-6 text-foreground" />
               </div>
             )}
           </div>
           <div className="min-w-0">
-            <p className="text-sm font-bold text-foreground group-hover:text-primary transition-colors truncate">{service.name}</p>
-            <div className="flex items-center gap-1.5 mt-0.5">
-              <MapPin className="w-3 h-3 text-muted-foreground" />
-              <p className="text-[10px] text-muted-foreground font-medium truncate">{service.city}</p>
+            <p className="text-xl font-black uppercase tracking-tighter text-foreground group-hover:text-primary transition-colors truncate">{service.name}</p>
+            <div className="flex items-center gap-2 mt-1">
+              <MapPin className="w-4 h-4 text-muted-foreground" />
+              <p className="text-[10px] text-muted-foreground font-black uppercase tracking-widest truncate">{service.city}</p>
             </div>
           </div>
         </div>
-        <div className="flex items-center gap-2 shrink-0">
+        <div className="flex items-center gap-3 shrink-0">
           <Button 
-            variant="ghost" 
+            variant="outline" 
             size="icon" 
-            className="h-8 w-8 rounded-lg text-muted-foreground hover:text-primary hover:bg-primary/5 hidden sm:flex" 
+            className="h-10 w-10 rounded-none border-2 text-muted-foreground hover:text-primary hover:border-primary hidden sm:flex transition-all" 
             onClick={(e) => onEdit(e, service)}
           >
-            <Edit2 className="w-3.5 h-3.5" />
+            <Edit2 className="w-4 h-4" />
           </Button>
           <div className="text-right hidden sm:block ml-2">
-            <div className={`flex items-center gap-1.5 px-2 py-0.5 rounded-full ${service.availability ? 'bg-emerald-500/10 text-emerald-500' : 'bg-muted text-muted-foreground'}`}>
-              <div className={`w-1.5 h-1.5 rounded-full ${service.availability ? 'bg-emerald-500 animate-pulse' : 'bg-muted-foreground'}`} />
-              <span className="text-[10px] font-bold uppercase tracking-tight">{service.availability ? 'Active' : 'Offline'}</span>
+            <div className={`flex items-center gap-2 px-3 py-1 border-2 ${service.availability ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500' : 'bg-muted text-muted-foreground border-border'}`}>
+              <div className={`w-2 h-2 rounded-none border-[1.5px] ${service.availability ? 'bg-emerald-500 border-emerald-700 animate-pulse' : 'bg-muted-foreground border-border'}`} />
+              <span className="text-[10px] font-black uppercase tracking-widest">{service.availability ? 'Active' : 'Offline'}</span>
             </div>
           </div>
-          {isExpanded ? <ChevronUp className="w-4 h-4 text-muted-foreground ml-1" /> : <ChevronDown className="w-4 h-4 text-muted-foreground ml-1" />}
+          {isExpanded ? <ChevronUp className="w-5 h-5 text-foreground ml-2" /> : <ChevronDown className="w-5 h-5 text-foreground ml-2" />}
         </div>
       </div>
       
       {isExpanded && (
-        <div className="border-t border-border bg-muted/20 animate-in slide-in-from-top-2 duration-300">
+        <div className="border-t-2 border-border bg-background animate-in slide-in-from-top-2 duration-300">
           <div className="p-3 space-y-6">
             <ServiceGallery 
               service={service}
