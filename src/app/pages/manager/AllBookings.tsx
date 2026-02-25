@@ -41,7 +41,7 @@ export function AllBookings() {
     setError("");
     try {
       const response = await managerApi.getAllBookings();
-      setBookings(response.content);
+      setBookings(response.content || []);
     } catch (err: any) {
       setError(err.message || "Failed to fetch bookings history");
     } finally {
@@ -68,9 +68,9 @@ export function AllBookings() {
   }, []);
 
   const filteredBookings = bookings.filter(b => {
-    const matchesSearch = b.reference.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         b.serviceName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         b.user.name.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch = (b.reference || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         (b.serviceName || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         (b.user?.name || "").toLowerCase().includes(searchQuery.toLowerCase());
     const matchesStatus = selectedStatus === "ALL" || b.status === selectedStatus;
     return matchesSearch && matchesStatus;
   });
@@ -174,7 +174,13 @@ export function AllBookings() {
       ) : (
         <div className="grid gap-4">
           {filteredBookings.map((booking) => {
-            const StatusIcon = statusConfig[booking.status].icon;
+            const statusData = statusConfig[booking.status as keyof typeof statusConfig] || { 
+              label: booking.status || "Unknown", 
+              color: "bg-gray-500/10 text-gray-500 border-gray-500/20", 
+              icon: Clock 
+            };
+            const StatusIcon = statusData.icon;
+            
             return (
               <div 
                 key={booking.id} 
@@ -186,18 +192,18 @@ export function AllBookings() {
                   {/* Status & Identity */}
                   <div className="lg:col-span-4 space-y-4">
                     <div className="flex items-center gap-3">
-                       <Badge variant="outline" className={`px-4 py-1.5 rounded-none text-[10px] font-black uppercase tracking-widest border-2 ${statusConfig[booking.status].color}`}>
+                       <Badge variant="outline" className={`px-4 py-1.5 rounded-none text-[10px] font-black uppercase tracking-widest border-2 ${statusData.color}`}>
                           <StatusIcon className="w-3 h-3 mr-2 inline-block" />
-                          {statusConfig[booking.status].label}
+                          {statusData.label}
                        </Badge>
-                       <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest bg-muted p-1">{booking.reference}</span>
+                       <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest bg-muted p-1">{booking.reference || 'N/A'}</span>
                     </div>
                     <div>
-                      <h3 className="text-3xl font-black uppercase tracking-tighter text-foreground leading-none mb-3 group-hover:text-primary transition-colors">{booking.serviceName}</h3>
+                      <h3 className="text-3xl font-black uppercase tracking-tighter text-foreground leading-none mb-3 group-hover:text-primary transition-colors">{booking.serviceName || 'Unknown Service'}</h3>
                       <div className="flex items-center gap-3">
-                         <div className="bg-background border-2 border-border px-2 py-1 rounded-none text-[10px] font-black text-muted-foreground uppercase tracking-widest">{booking.resourceName}</div>
+                         <div className="bg-background border-2 border-border px-2 py-1 rounded-none text-[10px] font-black text-muted-foreground uppercase tracking-widest">{booking.resourceName || 'Unknown Resource'}</div>
                          <div className="w-2 h-2 bg-foreground" />
-                         <span className="text-xs font-black text-muted-foreground uppercase tracking-widest">{new Date(booking.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} • {new Date(booking.createdAt).toLocaleDateString()}</span>
+                         <span className="text-xs font-black text-muted-foreground uppercase tracking-widest">{booking.createdAt ? new Date(booking.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ''} • {booking.createdAt ? new Date(booking.createdAt).toLocaleDateString() : ''}</span>
                       </div>
                     </div>
                   </div>
@@ -209,26 +215,26 @@ export function AllBookings() {
                            <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest opacity-40">Client Info</p>
                            <div className="flex items-center gap-2">
                               <User className="w-3.5 h-3.5 text-primary" />
-                              <span className="text-sm font-bold text-foreground truncate">{booking.user.name}</span>
+                              <span className="text-sm font-bold text-foreground truncate">{booking.user?.name || 'Unknown User'}</span>
                            </div>
                         </div>
                         <div className="space-y-1">
                            <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest opacity-40">Financials</p>
                            <div className="flex items-center gap-2">
                               <Wallet className="w-3.5 h-3.5 text-emerald-500" />
-                              <span className="text-sm font-bold text-foreground">₹{booking.amountBreakdown.totalAmount}</span>
+                              <span className="text-sm font-bold text-foreground">₹{booking.amountBreakdown?.totalAmount || 0}</span>
                            </div>
-                           <p className="text-[9px] font-bold text-muted-foreground/60 ml-5 uppercase">Inc. Fee (₹{booking.amountBreakdown.platformFee})</p>
+                           <p className="text-[9px] font-bold text-muted-foreground/60 ml-5 uppercase">Inc. Fee (₹{booking.amountBreakdown?.platformFee || 0})</p>
                         </div>
                      </div>
                      <div className="space-y-4 text-right">
                         <div className="space-y-1">
                            <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest opacity-40">Date</p>
-                           <p className="text-sm font-bold text-foreground">{new Date(booking.bookingDate).toLocaleDateString()}</p>
+                           <p className="text-sm font-bold text-foreground">{booking.bookingDate ? new Date(booking.bookingDate).toLocaleDateString() : 'N/A'}</p>
                         </div>
                         <div className="space-y-1 text-primary">
                            <p className="text-[10px] font-bold uppercase tracking-widest opacity-40 text-muted-foreground">Timeslot</p>
-                           <p className="text-sm font-black tracking-tight">{booking.startTime} - {booking.endTime}</p>
+                           <p className="text-sm font-black tracking-tight">{booking.startTime || '--:--'} - {booking.endTime || '--:--'}</p>
                         </div>
                      </div>
                   </div>
@@ -240,7 +246,7 @@ export function AllBookings() {
                            <p className="text-[10px] font-black uppercase tracking-widest">Subtotal</p>
                            <ArrowUpRight className="w-4 h-4" />
                         </div>
-                        <h4 className="text-2xl font-black uppercase tracking-tighter">₹{booking.amountBreakdown.slotSubtotal}</h4>
+                        <h4 className="text-2xl font-black uppercase tracking-tighter">₹{booking.amountBreakdown?.slotSubtotal || 0}</h4>
                      </div>
                      <div className="flex flex-col w-full gap-2">
                         <Button 

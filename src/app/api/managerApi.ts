@@ -327,6 +327,16 @@ export interface CreateInvoiceTemplateRequest {
     content: string;
 }
 
+export interface CreateActivityRequest {
+    code: string;
+    name: string;
+}
+
+export interface UpdateActivityRequest {
+    code: string;
+    name: string;
+}
+
 export const managerApi = {
     getActiveInvoiceTemplate: async (): Promise<InvoiceTemplate> => {
         return apiRequest<InvoiceTemplate>('/api/manager/invoice-template/active');
@@ -453,5 +463,35 @@ export const managerApi = {
     },
     getAdminRevenue: async (adminId: number): Promise<AdminRevenueResponse> => {
         return apiRequest<AdminRevenueResponse>(`/manager/admins/${adminId}/revenue`);
+    },
+    getActivities: async (): Promise<ServiceActivity[]> => {
+        return apiRequest<ServiceActivity[]>('/manager/activities');
+    },
+    createActivity: async (data: CreateActivityRequest): Promise<ServiceActivity> => {
+        return apiRequest<ServiceActivity>('/manager/activities', {
+            method: 'POST',
+            data
+        });
+    },
+    updateActivity: async (id: number, data: UpdateActivityRequest): Promise<ServiceActivity> => {
+        return apiRequest<ServiceActivity>(`/manager/activities/${id}`, {
+            method: 'PUT',
+            data
+        });
+    },
+    deleteActivity: async (id: number): Promise<string> => {
+        return apiRequest<string>(`/manager/activities/${id}`, {
+            method: 'DELETE'
+        });
+    },
+    enableActivity: async (id: number): Promise<void> => {
+        return apiRequest<void>(`/manager/activities/${id}/enable`, {
+            method: 'PATCH'
+        });
+    },
+    disableActivity: async (id: number): Promise<void> => {
+        return apiRequest<void>(`/manager/activities/${id}/disable`, {
+            method: 'PATCH'
+        });
     }
 };

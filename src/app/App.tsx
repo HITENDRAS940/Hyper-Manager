@@ -12,6 +12,7 @@ import { AllBookings } from "./pages/manager/AllBookings";
 import { ResourceDetailView } from "./pages/manager/ResourceDetailView";
 import { UserManagement as ManagerUserManagement } from "./pages/manager/UserManagement";
 import { InvoiceTemplate } from "./pages/manager/InvoiceTemplate";
+import { Activities } from "./pages/manager/Activities";
 import { LoginPage } from "./pages/LoginPage";
 
 export default function App() {
@@ -124,6 +125,7 @@ export default function App() {
               <Route path="/manager/resources/:id" element={<ResourceDetailViewWrapper />} />
               <Route path="/manager/users" element={<ManagerUserManagement />} />
               <Route path="/manager/invoice-template" element={<InvoiceTemplate />} />
+              <Route path="/manager/activities" element={<Activities />} />
               <Route path="/manager" element={<Navigate to="/manager/bookings" replace />} />
             </>
           )}

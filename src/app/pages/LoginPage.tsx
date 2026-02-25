@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
-import { Calendar, Mail, ArrowRight, ShieldCheck, Shield, KeyRound, Loader2 } from "lucide-react";
+import { Mail, ArrowRight, ShieldCheck, Shield, Loader2 } from "lucide-react";
 import { authApi } from "../api/authApi";
 import { motion, AnimatePresence } from "motion/react";
 import loginBg from "../assets/login-bg.png"; // Importing the local asset
@@ -109,26 +109,35 @@ export function LoginPage({ onLogin }: LoginPageProps) {
   };
 
   return (
-    <div className="min-h-screen bg-[#030213] flex relative overflow-hidden">
-      {/* Left Section - Form */}
-     <motion.div 
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="w-full lg:w-1/2 flex flex-col justify-center px-4 sm:px-12 lg:px-24 z-10 bg-[#030213] relative border-r border-white/5"
-      >
-         {/* Background elements for left side ambiance - Brutalist Grid */}
-         <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none opacity-20 z-0">
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:4rem_4rem]" />
-         </div>
+    <div className="min-h-screen flex items-center justify-center relative overflow-hidden font-sans">
+      {/* Background Image - Full Screen coverage */}
+      <div className="absolute inset-0 z-0">
+        <motion.img 
+          src={loginBg} 
+          alt="Stadium Background" 
+          initial={{ scale: 1.1, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 1.5, ease: "easeOut" }}
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        {/* Dynamic Dark Gradient Overlay for depth and readability */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-black via-black/40 to-black/60 z-10" />
+        
+        {/* Pitch Green Glow Overlay */}
+        <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-emerald-500/20 to-transparent z-10" />
+      </div>
 
-         <div className="relative z-20 w-full max-w-[420px] mx-auto">
-            <div className="bg-[#030213] border-2 border-white/20 rounded-none p-6 sm:p-10 shadow-[8px_8px_0_0_rgba(255,255,255,0.1)] relative overflow-visible">
-              {/* Aggressive corner accents */}
-              <div className="absolute -top-2 -left-2 w-4 h-4 border-t-2 border-l-2 border-blue-500" />
-              <div className="absolute -top-2 -right-2 w-4 h-4 border-t-2 border-r-2 border-blue-500" />
-              <div className="absolute -bottom-2 -left-2 w-4 h-4 border-b-2 border-l-2 border-blue-500" />
-              <div className="absolute -bottom-2 -right-2 w-4 h-4 border-b-2 border-r-2 border-blue-500" />
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="w-full max-w-[440px] px-4 z-20"
+      >
+        <div className="backdrop-blur-2xl bg-black/40 border border-white/10 rounded-3xl p-8 sm:p-10 shadow-2xl relative overflow-hidden">
+          {/* Subtle Green Glass Glow */}
+          <div className="absolute -top-24 -right-24 w-48 h-48 bg-emerald-500/10 blur-[100px] pointer-events-none" />
+          <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-emerald-500/10 blur-[100px] pointer-events-none" />
+
               <AnimatePresence mode="wait">
                 <motion.div
                   key={role}
@@ -143,13 +152,16 @@ export function LoginPage({ onLogin }: LoginPageProps) {
                     transition={{ delay: 0.1, duration: 0.5 }}
                     className="mb-8"
                   >
-                    <h1 className="text-3xl sm:text-4xl font-black text-white uppercase tracking-tighter mb-3 leading-none">
-                      {step === 'email' ? (role === 'admin' ? 'Admin Portal' : 'Manager Portal') : 'Verify Identity'}
-                    </h1>
-                    <p className="text-gray-400 text-xs sm:text-sm font-bold uppercase tracking-widest leading-relaxed">
+                    <div className="flex items-center gap-2 mb-4">
+                      <div className="w-2 h-8 bg-emerald-500 rounded-full" />
+                      <h1 className="text-3xl sm:text-4xl font-black text-white uppercase tracking-tighter leading-none">
+                        {step === 'email' ? (role === 'admin' ? 'Admin' : 'Manager') : 'Verify'}
+                      </h1>
+                    </div>
+                    <p className="text-gray-400 text-xs sm:text-sm font-medium uppercase tracking-[0.2em] leading-relaxed">
                       {step === 'email' 
-                        ? `Secure access for ${role === 'admin' ? 'administrators' : 'operational managers'}.` 
-                        : `Enter the code sent to ${email}`}
+                        ? `Secure gate for ${role === 'admin' ? 'administrators' : 'operational managers'}.` 
+                        : `Verification code sent to ${email}`}
                     </p>
                   </motion.div>
 
@@ -161,29 +173,29 @@ export function LoginPage({ onLogin }: LoginPageProps) {
                       exit={{ opacity: 0, height: 0, marginBottom: 0 }}
                       className="overflow-hidden"
                     >
-                        <div className="grid grid-cols-2 gap-4">
+                         <div className="grid grid-cols-2 gap-4">
                           <button
                             type="button"
                             onClick={() => setRole('admin')}
-                            className={`relative overflow-visible flex flex-col items-center justify-center gap-2 py-4 rounded-none border-2 transition-all duration-200 group ${
+                            className={`relative overflow-visible flex flex-col items-center justify-center gap-2 py-4 rounded-2xl border transition-all duration-300 group ${
                               role === 'admin'
-                                ? 'bg-blue-600/10 border-blue-500 text-blue-400 shadow-[4px_4px_0_0_rgba(59,130,246,0.5)] -translate-x-1 -translate-y-1'
-                                : 'bg-transparent border-white/20 text-gray-500 hover:border-white/50 hover:text-gray-300'
+                                ? 'bg-emerald-500/10 border-emerald-500 text-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.2)]'
+                                : 'bg-white/5 border-white/10 text-gray-500 hover:border-white/30 hover:text-gray-300'
                             }`}
                           >
-                            <ShieldCheck className={`w-6 h-6 sm:w-8 sm:h-8 z-10 transition-transform duration-300 ${role === 'admin' ? 'scale-110 drop-shadow-md' : 'group-hover:scale-110'}`} />
+                            <ShieldCheck className={`w-6 h-6 sm:w-8 sm:h-8 z-10 transition-transform duration-300 ${role === 'admin' ? 'scale-110 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]' : 'group-hover:scale-110'}`} />
                             <span className="font-black text-[10px] sm:text-xs tracking-widest uppercase z-10">Admin</span>
                           </button>
                           <button
                             type="button"
                             onClick={() => setRole('manager')}
-                            className={`relative overflow-visible flex flex-col items-center justify-center gap-2 py-4 rounded-none border-2 transition-all duration-200 group ${
+                            className={`relative overflow-visible flex flex-col items-center justify-center gap-2 py-4 rounded-2xl border transition-all duration-300 group ${
                               role === 'manager'
-                                ? 'bg-indigo-600/10 border-indigo-500 text-indigo-400 shadow-[4px_4px_0_0_rgba(99,102,241,0.5)] -translate-x-1 -translate-y-1'
-                                : 'bg-transparent border-white/20 text-gray-500 hover:border-white/50 hover:text-gray-300'
+                                ? 'bg-emerald-500/10 border-emerald-500 text-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.2)]'
+                                : 'bg-white/5 border-white/10 text-gray-500 hover:border-white/30 hover:text-gray-300'
                             }`}
                           >
-                            <Shield className={`w-6 h-6 sm:w-8 sm:h-8 z-10 transition-transform duration-300 ${role === 'manager' ? 'scale-110 drop-shadow-md' : 'group-hover:scale-110'}`} />
+                            <Shield className={`w-6 h-6 sm:w-8 sm:h-8 z-10 transition-transform duration-300 ${role === 'manager' ? 'scale-110 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]' : 'group-hover:scale-110'}`} />
                             <span className="font-black text-[10px] sm:text-xs tracking-widest uppercase z-10">Manager</span>
                           </button>
                         </div>
@@ -202,15 +214,15 @@ export function LoginPage({ onLogin }: LoginPageProps) {
                           transition={{ duration: 0.2 }}
                           className="space-y-1.5"
                         >
-                          <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">Email Address</label>
+                           <label className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 ml-1">Email Access</label>
                           <div className="relative group mt-1">
-                            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-medium pr-3 border-r-2 border-white/20 flex items-center gap-2 pointer-events-none transition-colors group-focus-within:text-blue-400 group-focus-within:border-blue-500">
+                            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 border-r border-white/10 pr-3 flex items-center gap-2 pointer-events-none transition-colors group-focus-within:text-emerald-500">
                                <Mail className="w-5 h-5" />
                             </div>
                             <Input
                               type="email"
-                              placeholder="admin@example.com"
-                              className="pl-14 h-14 bg-transparent border-2 border-white/20 text-white placeholder:text-gray-600 focus-visible:ring-0 focus-visible:border-blue-500 rounded-none transition-all text-lg font-bold hover:border-white/50 focus-visible:shadow-[4px_4px_0_0_rgba(59,130,246,0.5)] focus-visible:-translate-y-1 focus-visible:-translate-x-1"
+                              placeholder="operator@stadium.com"
+                              className="pl-14 h-14 bg-white/5 border-white/10 text-white placeholder:text-gray-600 focus-visible:ring-0 focus-visible:border-emerald-500 rounded-xl transition-all text-lg font-bold hover:bg-white/[0.08]"
                               value={email}
                               onChange={(e) => setEmail(e.target.value)}
                               autoFocus
@@ -229,11 +241,11 @@ export function LoginPage({ onLogin }: LoginPageProps) {
                           <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">Verification Code</label>
                           <div className="relative group mt-1 flex justify-center">
                             {/* We replace the standard input with our new InputOTP component from input-otp.tsx, but since we didn't import it here, we'll style the standard input to match brutalist expectations for now */}
-                            <Input
+                             <Input
                               type="password"
                               placeholder="• • • • • •"
                               maxLength={6}
-                              className="h-16 bg-transparent border-2 border-white/20 text-white placeholder:text-gray-600 focus-visible:ring-0 focus-visible:border-blue-500 rounded-none transition-all font-mono tracking-[1em] text-center text-2xl font-black hover:border-white/50 focus-visible:shadow-[4px_4px_0_0_rgba(59,130,246,0.5)] focus-visible:-translate-y-1 focus-visible:-translate-x-1"
+                              className="h-16 bg-white/5 border-white/10 text-white placeholder:text-gray-600 focus-visible:ring-0 focus-visible:border-emerald-500 rounded-xl transition-all font-mono tracking-[1em] text-center text-2xl font-black hover:bg-white/[0.08]"
                               value={otp}
                               onChange={(e) => setOtp(e.target.value)}
                               autoFocus
@@ -259,14 +271,10 @@ export function LoginPage({ onLogin }: LoginPageProps) {
                       )}
                     </AnimatePresence>
 
-                    <motion.div whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}>
+                     <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                       <Button 
                         type="submit" 
-                        className={`w-full h-14 text-sm font-black uppercase tracking-widest rounded-none border-2 transition-all duration-200 mt-2 ${
-                          role === 'admin' 
-                            ? 'bg-blue-600 border-blue-600 hover:bg-transparent hover:text-blue-500 text-white shadow-[6px_6px_0_0_rgba(59,130,246,0.3)] hover:shadow-none hover:translate-x-1.5 hover:translate-y-1.5' 
-                            : 'bg-indigo-600 border-indigo-600 hover:bg-transparent hover:text-indigo-500 text-white shadow-[6px_6px_0_0_rgba(99,102,241,0.3)] hover:shadow-none hover:translate-x-1.5 hover:translate-y-1.5'
-                        }`}
+                        className={`w-full h-14 text-sm font-black uppercase tracking-widest rounded-xl border-none transition-all duration-300 mt-2 bg-emerald-500 hover:bg-emerald-400 text-black shadow-[0_0_30px_rgba(16,185,129,0.3)] hover:shadow-[0_0_40px_rgba(16,185,129,0.5)]`}
                         disabled={isLoading || (step === 'email' ? !email || !email.includes('@') : otp.length !== 6)}
                       >
                         {isLoading ? (
@@ -276,7 +284,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
                           </span>
                         ) : (
                           <span className="flex items-center justify-center gap-3">
-                            {step === 'email' ? 'REQUEST OTP' : 'VERIFY & LOGIN'} <ArrowRight className="w-5 h-5" />
+                            {step === 'email' ? 'GET ACCESS CODE' : 'VERIFY IDENTITY'} <ArrowRight className="w-5 h-5" />
                           </span>
                         )}
                       </Button>
@@ -290,7 +298,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
                         onClick={() => setStep('email')}
                         className="w-full text-[10px] font-black uppercase tracking-widest text-gray-500 hover:text-white transition-colors py-4 flex items-center justify-center gap-2 group mt-2"
                       >
-                        NOT {email}? <span className="text-blue-500 group-hover:underline underline-offset-4">CHANGE EMAIL</span>
+                        NOT {email}? <span className="text-emerald-500 group-hover:underline underline-offset-4">CHANGE EMAIL</span>
                       </motion.button>
                     )}
                   </form>
@@ -298,62 +306,10 @@ export function LoginPage({ onLogin }: LoginPageProps) {
               </AnimatePresence>
             </div>
             
-            <p className="text-center text-gray-600/50 text-[10px] mt-8 font-medium tracking-widest uppercase">
-               Secured by SportBook Identity
+            <p className="text-center text-gray-500 text-[10px] mt-8 font-medium tracking-[0.3em] uppercase opacity-50">
+              Encrypted via SportBook Core
             </p>
-         </div>
-      </motion.div>
-
-      {/* Right Section - Hero Image */}
-      <div className="hidden lg:block w-1/2 relative overflow-hidden">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={role}
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 30 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute inset-0"
-          >
-            {/* Dynamic Gradient Overlay */}
-            <div 
-              className={`absolute inset-0 z-10 box-border border-l border-white/5 transition-colors duration-1000 ${
-                role === 'admin' 
-                  ? 'bg-gradient-to-br from-blue-900/40 to-indigo-900/60' 
-                  : 'bg-gradient-to-br from-indigo-900/40 to-purple-900/60'
-              }`} 
-            />
-            
-            <motion.img 
-              src={loginBg} 
-              alt="Login Background" 
-              initial={{ scale: 1.1 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 1.5, ease: "easeOut" }}
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.4, duration: 0.6, type: "spring", stiffness: 100 }}
-              className="absolute bottom-12 left-12 right-12 z-20 p-8 bg-[#030213]/90 border-4 border-white shadow-[12px_12px_0_0_rgba(255,255,255,0.2)] rounded-none"
-            >
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-6 leading-[1.1] uppercase tracking-tighter">
-                  {role === 'admin' 
-                    ? "Performance analytics and master management." 
-                    : "Streamline operations and manage squads."}
-                </h2>
-                <div className="w-16 h-2 bg-blue-500 mb-6" />
-                <p className="text-sm sm:text-base text-gray-400 font-bold uppercase tracking-widest leading-loose">
-                  {role === 'admin'
-                    ? "Seamlessly manage turf operations, track booking limits, and force-optimize resource allocation completely via the Admin Command Center."
-                    : "Command managers with real-time intelligence, rigorous scheduling tools, and highly efficient comms for bulletproof operations."}
-                </p>
-            </motion.div>
           </motion.div>
-        </AnimatePresence>
-      </div>
-    </div>
+        </div>
   );
 }

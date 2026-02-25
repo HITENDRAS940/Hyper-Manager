@@ -18,6 +18,7 @@ import {
   ShieldCheck,
   Clock,
   BookOpen,
+  Activity,
 } from "lucide-react";
 
 interface DashboardLayoutProps {
@@ -35,6 +36,7 @@ const navItems = [
   { id: "pricing", label: "Dynamic Pricing", icon: TrendingUp, roles: ['admin'], path: '/admin/pricing' },
   { id: "users", label: "User & Wallet", icon: Users, roles: ['admin', 'manager'], path: (role: string) => `/${role}/users` },
   { id: "invoice-template", label: "Invoice Template", icon: Clock, roles: ['manager'], path: '/manager/invoice-template' },
+  { id: "activities", label: "Activities", icon: Activity, roles: ['manager'], path: '/manager/activities' },
 ];
 export function DashboardLayout({ userRole, onLogout }: DashboardLayoutProps) {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
